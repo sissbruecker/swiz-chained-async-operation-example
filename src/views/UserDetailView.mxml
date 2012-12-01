@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx"
+               title="Edit user">
+
+    <fx:Script><![CDATA[
+        import events.UserEvent;
+
+        import models.User;
+
+        import mx.managers.PopUpManager;
+
+        [Dispatcher]
+        public var dispatcher:IEventDispatcher;
+
+        [Inject(source="userModel.editedUser")]
+        [Bindable]
+        public var user:User;
+
+        private function save():void {
+
+            dispatcher.dispatchEvent(new UserEvent(UserEvent.SAVE));
+        }
+
+        private function cancel():void {
+
+            dispatcher.dispatchEvent(new UserEvent(UserEvent.CANCEL));
+        }
+
+        [EventHandler(event="UserEvent.SAVE")]
+        [EventHandler(event="UserEvent.CANCEL")]
+        public function onSaveOrCancel():void {
+            PopUpManager.removePopUp(this);
+        }
+        ]]></fx:Script>
+
+    <s:Form>
+
+        <s:FormItem label="First name">
+            <s:TextInput id="firstName"
+                         text="{user.firstName}"
+                         change="{user.firstName = firstName.text}"/>
+        </s:FormItem>
+
+        <s:FormItem label="Last name">
+            <s:TextInput id="lastName"
+                         text="{user.lastName}"
+                         change="{user.lastName= lastName.text}"/>
+        </s:FormItem>
+
+    </s:Form>
+
+    <s:controlBarContent>
+        <s:HGroup width="100%">
+
+            <s:Button label="Save"
+                      click="save()"/>
+
+            <s:Button label="Cancel"
+                      click="cancel()"/>
+
+        </s:HGroup>
+    </s:controlBarContent>
+
+</s:TitleWindow>

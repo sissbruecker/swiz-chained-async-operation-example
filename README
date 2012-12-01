@@ -1,1 +1,4 @@
-This file was created by IntelliJ IDEA 11.1.4 for binding GitHub repository
+Small example that shows how to:
+- Wrap several actions into an asynchronous operation by using IAsynchronousOperation
+- Dispatch a follow-up event based on result of the said operation (success/failure) by using event chains
+- Pass data from the result of a event chain step to a follow-up event

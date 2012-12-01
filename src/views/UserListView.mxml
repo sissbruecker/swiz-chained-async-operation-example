@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx">
+
+    <fx:Script><![CDATA[
+        import events.UserEvent;
+
+        import models.User;
+
+        import mx.collections.IList;
+
+        [Inject(source="userModel.users", bind="true")]
+        [Bindable]
+        public var users:IList;
+
+        private function add():void {
+
+            dispatchEvent(new UserEvent(UserEvent.ADD));
+        }
+
+        private function edit():void {
+
+            dispatchEvent(new UserEvent(UserEvent.EDIT, list.selectedItem as User));
+        }
+
+        private function assign():void {
+
+            dispatchEvent(new UserEvent(UserEvent.ASSIGN, list.selectedItem as User));
+        }
+
+        private function addAndAssign():void {
+
+            dispatchEvent(new UserEvent(UserEvent.ADD_AND_ASSIGN));
+        }
+        ]]></fx:Script>
+
+    <s:layout>
+        <s:VerticalLayout/>
+    </s:layout>
+
+    <s:List id="list"
+            dataProvider="{users}"/>
+
+    <s:Button label="Add"
+              click="add()"/>
+
+    <s:Button label="Add and assign"
+              click="addAndAssign()"/>
+
+    <s:Button label="Edit"
+              enabled="{list.selectedItem}"
+              click="edit()"/>
+
+    <s:Button label="Assign"
+              enabled="{list.selectedItem}"
+              click="assign()"/>
+
+</s:Group>
